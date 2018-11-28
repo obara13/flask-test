@@ -1,0 +1,36 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+
+試験環境リスト
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>No</td>
+            <td>IP</td>
+            <td>利用状況</td>
+            <td>削除</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for server in servers %}
+        <tr>
+            <td>{{ server[0] }}</td>
+            <td>{{ server[1] }}</td>
+            <td>{{ server[2] }}</td>
+            <form action="/admin/{{ server[0] }}/del" method="POST">
+                <td><input type="submit" value="削除" /></td>
+            </form>
+        </tr>
+        {% endfor %}
+        <tr>
+            <form action="/admin/add" method="POST">
+                <td></td>
+                <td><input name="ip" type="text" /></td>
+                <td><input type="submit" value="追加" /></td>
+            </form>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}

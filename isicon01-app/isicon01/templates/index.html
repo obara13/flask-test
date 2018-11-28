@@ -1,0 +1,16 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+
+<p>IDを入力して試験開始ボタンを押してください。</p>
+
+
+<form action="/start" method="POST">
+    <div class="form-group">
+        <label>ID</label>
+        <input type="text" name="id" class="form-control" placeholder="tie??????" />
+    </div>
+    <button name="start" type="submit" class="btn btn-primary">試験開始</button>
+</form>
+
+{% endblock %}

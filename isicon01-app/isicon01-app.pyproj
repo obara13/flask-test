@@ -28,8 +28,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.py" />
+    <Compile Include="isicon01\admin.py" />
+    <Compile Include="isicon01\views.py" />
+    <Compile Include="isicon01\__init__.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="isicon01\static\content\bootstrap.min.css" />
+    <Content Include="isicon01\static\scripts\bootstrap.min.js" />
+    <Content Include="isicon01\static\scripts\jquery-3.3.1.min.js" />
+    <Content Include="isicon01\templates\index.html" />
+    <Content Include="isicon01\templates\layout.html" />
+    <Content Include="isicon01\templates\admin.html" />
+    <Content Include="isicon01\templates\start.html" />
     <Content Include="requirements.txt" />
     <Content Include="static\content\bootstrap.min.css" />
     <Content Include="static\scripts\bootstrap.min.js" />
@@ -50,6 +60,11 @@
     </Interpreter>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="isicon01\" />
+    <Folder Include="isicon01\static\" />
+    <Folder Include="isicon01\static\content\" />
+    <Folder Include="isicon01\static\scripts\" />
+    <Folder Include="isicon01\templates\" />
     <Folder Include="static\content\" />
     <Folder Include="static\scripts\" />
     <Folder Include="templates\" />
