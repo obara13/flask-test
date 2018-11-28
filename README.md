@@ -10,7 +10,7 @@ tar zxvf gotty_linux_amd64.tar.gz
 mv gotty /usr/local/bin/
 ```
 
-### app
+### appを入れる
 ```
 yum install git python python-virtualenv
 git clone http://deviac.div.tis.co.jp/ISICON/isicon01-app.git
@@ -22,6 +22,5 @@ pip install flask
 
 ### 起動
 ```
-cd isicon01-app/isicon01-app/
 python app.py
 ```
