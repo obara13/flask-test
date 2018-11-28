@@ -6,6 +6,8 @@ It contains the definition of routes and views for the application.
 from flask import Flask, render_template, request, json
 import datetime
 import sqlite3
+import subprocess
+
 app = Flask(__name__)
 
 # Make the WSGI interface available at the top level so wfastcgi can get it.
@@ -23,19 +25,35 @@ def hello():
 @app.route('/start', methods=['POST'])
 def start():
     print(request.form)
-    id = request.form['id']
-    starttime = datetime.datetime.now()
-    endtime = starttime + datetime.timedelta(minutes=etime)
 
+    # param set
+    userid = request.form['id']
+    starttime = datetime.datetime.now()
+    finishtime = starttime + datetime.timedelta(minutes=etime)
+    endtime = finishtime
+
+    # gotty connection
+    client = '192.168.10.2'
+    try:
+        args = [
+            'gotty',
+            '-w',
+            'ssh',
+            client,
+        ]
+        command = subprocess.Popen(args)
+    except:
+        pass
+
+    # db connection
     conn = sqlite3.connect(dbpath, detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
     sqlite3.dbapi2.converters['DATETIME'] = sqlite3.dbapi2.converters['TIMESTAMP']
-
     c = conn.cursor()
 
     try:
-        #c.execute("drop table if exists exam")
-        c.execute("create table if not exists exam (id text, starttime datetime, endtime datetime)")
-        c.execute("insert into exam values (?, ?, ?)", (id, starttime, endtime))
+        c.execute("drop table if exists exam")
+        c.execute("create table if not exists exam (userid text, starttime datetime, endtime datetime)")
+        c.execute("insert into exam values (?, ?, ?)", (userid, starttime, endtime))
 
         ret = c.execute("select * from exam;")
         for row in ret:
@@ -49,16 +67,18 @@ def start():
 
     return render_template(
         'start.html',
-        id = id,
+        id = userid,
         starttime = starttime,
         endtime = endtime,
+        gotty = 'http://192.168.175.27:8080/',
     )
 
 if __name__ == '__main__':
     import os
-    HOST = os.environ.get('SERVER_HOST', 'localhost')
+    HOST = os.environ.get('SERVER_HOST', '192.168.175.27')
     try:
-        PORT = int(os.environ.get('SERVER_PORT', '5555'))
+        PORT = int(os.environ.get('SERVER_PORT', '80'))
     except ValueError:
-        PORT = 5555
+        PORT = 81
     app.run(HOST, PORT)
+
