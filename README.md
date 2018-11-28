@@ -1,23 +1,27 @@
 # ISICON01 試験アプリ
 
-### gotty
-'''
+## 環境構築手順
+
+### gottyを入れる
+```
 yum install wget unzip
 wget https://github.com/yudai/gotty/releases/download/v1.0.1/gotty_linux_amd64.tar.gz
 tar zxvf gotty_linux_amd64.tar.gz
 mv gotty /usr/local/bin/
-'''
+```
 
 ### app
-'''
+```
 yum install git python python-virtualenv
+git clone http://deviac.div.tis.co.jp/ISICON/isicon01-app.git
 cd isicon01-app/isicon01-app/
 virtualenv virt
 source virt/bin/activate
 pip install flask
-'''
+```
 
 ### 起動
-'''
+```
+cd isicon01-app/isicon01-app/
 python app.py
-'''
+```
