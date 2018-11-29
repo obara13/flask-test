@@ -27,3 +27,21 @@ cd isicon01-app/isicon01-app/
 source virt/bin/activate
 python app.py
 ```
+
+
+python3
+```
+yum install https://centos7.iuscommunity.org/ius-release.rpm
+yum install python34 python34-virtualenv python34-pip
+virtualenv-3 virt3
+source virt3/bin/activate
+pip install flask
+
+yum install python36 python36u-pip
+pip3.6 install virtualenv
+/usr/local/bin/virtualenv virt3
+source virt3/bin/activate
+pip install flask
+
+```
+
