@@ -10,9 +10,8 @@ import subprocess
 
 
 dbpath = 'data.db'
-etime = 120
-
-
+step_server = '192.168.175.27'
+exam_time = 120
 
 
 @app.route('/')
@@ -28,23 +27,18 @@ def start():
     # param set
     userid = request.form['id']
     starttime = datetime.datetime.now()
-    endtime = starttime + datetime.timedelta(minutes=etime)
+    endtime = starttime + datetime.timedelta(minutes=exam_time)
     finishtime = endtime
 
-    gotty_param = create_gotty_param()
+    gotty_param = create_gotty_param(userid)
+    port = gotty_param[3]
     try:
-        print('a')
-        print(gotty_param)
-        #gotty_param = [
-        #    'gotty', '-w',
-        #    '-p', '10263',
-        #    'ssh', '192.168.10.11',
-        #]
-        #print('b')
         print(gotty_param)
         #command = subprocess.Popen(gotty_param)
+        command = subprocess.run(gotty_param, timeout=60)
+        print(command)
     except:
-        print('gotty except')
+        print('in gotty error')
         pass
 
     # db connection
@@ -72,31 +66,31 @@ def start():
         id = userid,
         starttime = starttime,
         endtime = endtime,
-        gotty = 'http://192.168.175.27:' + str(gotty_param[3]) + '/',
+        gotty = 'http://' + step_server + ':' + port + '/',
     )
 
-
-
-# create gotty connection
-def create_gotty_param():
+# create gotty connection parameters
+def create_gotty_param(userid):
     conn = sqlite3.connect(dbpath)
     c = conn.cursor()
     try:
         c.execute("SELECT * FROM server WHERE use IS NULL;")
-        servers = c.fetchall()
-        for server in servers:
+        exam_servers = c.fetchall()
+        for server in exam_servers:
             num = server[0]
             ip = server[1]
             port = server[2]
-            if server[3] is None:
-                c.execute("UPDATE server SET use = 'use' WHERE num = ?", (num,))
-                gotty_url = 'http://' + '192.168.175.27' + ':' + str(port) + '/'
+            use = server[3]
+            # if server is blank, set use for exam
+            if use is None:
+                c.execute("UPDATE server SET use = 'use', user = ? WHERE num = ?", (userid, num))
                 break
     except sqlite3.Error as e:
         print('sqlite3 error: ', e.args[0])
     conn.commit()
     conn.close()
 
+    # create command exec string "gotty -w -p port ssh xxx.xxx.xxx.xxx"
     gotty_param = [
         'gotty', '-w',
         '-p', str(port),

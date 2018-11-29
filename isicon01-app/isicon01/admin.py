@@ -13,79 +13,72 @@ dbpath = 'data.db'
 
 @app.route('/admin')
 def admin():
+    # show all exam_servers
     conn = sqlite3.connect(dbpath)
     c = conn.cursor()
-
     try:
         c.execute("select * from server;")
-        servers = c.fetchall()
+        exam_servers = c.fetchall()
     except sqlite3.Error as e:
         print('sqlite3 error: ', e.args[0])
-
     conn.commit()
     conn.close()
-
-    print(servers)
-
+    #print(exam_servers)
     return render_template(
         'admin.html',
-        servers = servers,
+        servers = exam_servers,
     )
 
 @app.route('/admin/add', methods=['POST'])
 def add():
     ip = request.form['ip']
     port = random.randint(10000,19999)
-
     conn = sqlite3.connect(dbpath)
     c = conn.cursor()
-
     try:
         c.execute("insert into server(ip, port) values(?, ?)", (ip, port))
         c.execute("select * from server;")
-        servers = c.fetchall()
+        exam_servers = c.fetchall()
     except sqlite3.Error as e:
         print('sqlite3 error: ', e.args[0])
-
     conn.commit()
     conn.close()
-
-    print(servers)
-
+    #print(exam_servers)
     return render_template(
         'admin.html',
-        servers = servers,
+        servers = exam_servers,
     )
 
 @app.route('/admin/<int:num>/del', methods=['POST'])
 def delete(num):
     conn = sqlite3.connect(dbpath)
     c = conn.cursor()
-
     try:
         c.execute("delete from server where num = ?", (num,))
         c.execute("select * from server;")
-        servers = c.fetchall()
+        exam_servers = c.fetchall()
     except sqlite3.Error as e:
         print('sqlite3 error: ', e.args[0])
-
     conn.commit()
     conn.close()
-
-    print(servers)
-
+    #print(exam_servers)
     return render_template(
         'admin.html',
-        servers = servers,
+        servers = exam_servers,
     )
-
 
 @app.route('/admin/createTable', methods=['POST'])
 def createTable():
     conn = sqlite3.connect(dbpath)
     c = conn.cursor()
     try:
-        c.execute("create table if not exists server (num integer primary key, ip text, port integer, use text)")
+        c.execute("""create table if not exists server (
+                       num integer primary key,
+                       ip text,
+                       port integer,
+                       use text,
+                       user text
+                 )""")
     except sqlite3.Error as e:
         print('sqlite3 error: ', e.args[0])
     conn.commit()
