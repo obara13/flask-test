@@ -1,5 +1,4 @@
 ﻿{% extends "layout.html" %}
-
 {% block content %}
 
 <table class="table table-bordered table-hover">
@@ -39,17 +38,17 @@
 </ul>
 <div class="tab-content">
     <div id="exam1" class="tab-pane fade show active">
-        <p>aaaaaaaaaaa</p>
+        {% block exam1 %}{% endblock %}
     </div>
     <div id="exam2" class="tab-pane fade">
         <p>bbbbbbbb</p>
+        {% block exam2 %}{% endblock %}
     </div>
     <div id="exam3" class="tab-pane fade">
         <p>ccccccccc</p>
+        {% block exam3 %}{% endblock %}
     </div>
 </div>
 
-
-
-
 {% endblock %}
+

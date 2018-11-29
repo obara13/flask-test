@@ -31,7 +31,21 @@ def start():
     endtime = starttime + datetime.timedelta(minutes=etime)
     finishtime = endtime
 
-    gotty_url = create_gotty_connection()
+    gotty_param = create_gotty_param()
+    try:
+        print('a')
+        print(gotty_param)
+        #gotty_param = [
+        #    'gotty', '-w',
+        #    '-p', '10263',
+        #    'ssh', '192.168.10.11',
+        #]
+        #print('b')
+        print(gotty_param)
+        command = subprocess.Popen(gotty_param)
+    except:
+        print('gotty except')
+        pass
 
     # db connection
     conn = sqlite3.connect(dbpath, detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
@@ -58,13 +72,13 @@ def start():
         id = userid,
         starttime = starttime,
         endtime = endtime,
-        gotty = gotty_url,
+        gotty = 'http://192.168.175.27:' + str(gotty_param[3]) + '/',
     )
 
 
 
 # create gotty connection
-def create_gotty_connection():
+def create_gotty_param():
     conn = sqlite3.connect(dbpath)
     c = conn.cursor()
     try:
@@ -83,18 +97,11 @@ def create_gotty_connection():
     conn.commit()
     conn.close()
 
-    try:
-        args = [
-            'gotty',
-            '-w',
-            'ssh',
-            ip,
-        ]
-        print(args)
-        command = subprocess.Popen(args)
-    except:
-        pass
+    gotty_param = [
+        'gotty', '-w',
+        '-p', str(port),
+        'ssh', str(ip),
+    ]
 
-    return gotty_url
-
+    return gotty_param
 
