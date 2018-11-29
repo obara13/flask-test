@@ -38,17 +38,17 @@
 </ul>
 <div class="tab-content">
     <div id="exam1" class="tab-pane fade show active">
-        {% block exam1 %}{% endblock %}
+        {% from "exam1.html" import exam1 %}
+        {{ exam1() }}
     </div>
     <div id="exam2" class="tab-pane fade">
-        <p>bbbbbbbb</p>
-        {% block exam2 %}{% endblock %}
+        {% from "exam2.html" import exam2 %}
+        {{ exam2() }}
     </div>
     <div id="exam3" class="tab-pane fade">
-        <p>ccccccccc</p>
-        {% block exam3 %}{% endblock %}
+        {% from "exam3.html" import exam3 %}
+        {{ exam3() }}
     </div>
 </div>
 
 {% endblock %}
-

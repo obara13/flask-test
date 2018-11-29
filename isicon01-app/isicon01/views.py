@@ -42,7 +42,7 @@ def start():
         #]
         #print('b')
         print(gotty_param)
-        command = subprocess.Popen(gotty_param)
+        #command = subprocess.Popen(gotty_param)
     except:
         print('gotty except')
         pass

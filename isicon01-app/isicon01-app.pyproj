@@ -36,6 +36,9 @@
     <Content Include="isicon01\static\content\bootstrap.min.css" />
     <Content Include="isicon01\static\scripts\bootstrap.min.js" />
     <Content Include="isicon01\static\scripts\jquery-3.3.1.min.js" />
+    <Content Include="isicon01\templates\exam1.html" />
+    <Content Include="isicon01\templates\exam2.html" />
+    <Content Include="isicon01\templates\exam3.html" />
     <Content Include="isicon01\templates\index.html" />
     <Content Include="isicon01\templates\layout.html" />
     <Content Include="isicon01\templates\admin.html" />
