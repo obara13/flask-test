@@ -260,4 +260,6 @@ paket-files/
 __pycache__/
 *.pyc
 
-isicon01/data.db
+README.md
+isicon01-app/data.db
+
